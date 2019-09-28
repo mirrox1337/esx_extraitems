@@ -35,9 +35,17 @@ AddEventHandler('esx_extraitems:oxygen_mask', function()
 	local coords     = GetEntityCoords(playerPed)
 	local boneIndex  = GetPedBoneIndex(playerPed, 12844)
 	local boneIndex2 = GetPedBoneIndex(playerPed, 24818)
+	local dict = "friends@"
+      local playerped = GetPlayerPed(PlayerId())
+      RequestAnimDict(dict)
+      while not HasAnimDictLoaded(dict) do
+        Citizen.Wait(0)
+      end
+      TaskPlayAnim(playerped, dict, "pickupwait", 8.0, -16.0, -1, 1, 0, false, false, false)
 
 	exports['t0sic_loadingbar']:loadingbar ('Sätter på Syrgasmask...', 6500)
-	Citizen.Wait(6500)
+        Citizen.Wait(6500)
+	ClearPedTasks(GetPlayerPed(-1))
 	
 	ESX.Game.SpawnObject('p_s_scuba_mask_s', {
 		x = coords.x,
@@ -75,8 +83,17 @@ end)
 RegisterNetEvent('esx_extraitems:bulletproof')
 AddEventHandler('esx_extraitems:bulletproof', function()
 	local playerPed = GetPlayerPed(-1)
-	exports['t0sic_loadingbar']:loadingbar ('Sätter på Vest...', 6500)
-	Citizen.Wait(6500)
+	local dict = "friends@"
+      local playerped = GetPlayerPed(PlayerId())
+      RequestAnimDict(dict)
+      while not HasAnimDictLoaded(dict) do
+        Citizen.Wait(0)
+      end
+      TaskPlayAnim(playerped, dict, "pickupwait", 8.0, -16.0, -1, 1, 0, false, false, false)
+
+	exports['t0sic_loadingbar']:loadingbar ('Sätter på Vest...', 3000)
+        Citizen.Wait(3000)
+	ClearPedTasks(GetPlayerPed(-1))
 	SetPedComponentVariation(playerPed, 9, 27, 9, 2)
 	AddArmourToPed(playerPed, 100)
 	SetPedArmour(playerPed, 100)
@@ -87,6 +104,16 @@ end)
 
 RegisterNetEvent('esx_extraitems:firstaidkit')
 AddEventHandler('esx_extraitems:firstaidkit', function()
+local dict = "missheistdockssetup1clipboard@idle_a"
+      local playerped = GetPlayerPed(PlayerId())
+      RequestAnimDict(dict)
+      while not HasAnimDictLoaded(dict) do
+        Citizen.Wait(0)
+      end
+      TaskPlayAnim(playerped, dict, "idle_a", 8.0, -16.0, -1, 1, 0, false, false, false)
+    exports['t0sic_loadingbar']:loadingbar ('Använder Förbandslåda...', 10000)
+    Citizen.Wait(10000)
+	ClearPedTasks(GetPlayerPed(-1))
 	local playerPed = GetPlayerPed(-1)
 	local health = GetEntityHealth(playerPed)
 	local max = GetEntityMaxHealth(playerPed)
@@ -255,6 +282,17 @@ RegisterNetEvent('esx_extraitems:picknick')
 AddEventHandler('esx_extraitems:picknick', function()
 	local playerPed = GetPlayerPed(-1)
 	local coords    = GetEntityCoords(playerPed)
+	local dict = "friends@"
+      local playerped = GetPlayerPed(PlayerId())
+      RequestAnimDict(dict)
+      while not HasAnimDictLoaded(dict) do
+        Citizen.Wait(0)
+      end
+      TaskPlayAnim(playerped, dict, "pickupwait", 8.0, -16.0, -1, 1, 0, false, false, false)
+
+	exports['t0sic_loadingbar']:loadingbar ('Lägger filt på marken...', 3000)
+        Citizen.Wait(3000)
+	ClearPedTasks(GetPlayerPed(-1))
 
 	ESX.Game.SpawnObject('prop_yoga_mat_02',  {
 		x = coords.x,
@@ -280,13 +318,14 @@ AddEventHandler('esx_extraitems:picknick', function()
 		z = coords.z -1
 	}, function(object)
 	end)
+	--[[
 	ESX.Game.SpawnObject('prop_beach_fire',  {
 		x = coords.x +1.3,
 		y = coords.y ,
 		z = coords.z -1.6
 	}, function(object)
 	end)
-	
+	--]]
 end)
 
 --End of picknick
