@@ -226,25 +226,26 @@ end)
 RegisterNetEvent('esx_extraitems:paraply')
 AddEventHandler('esx_extraitems:paraply', function()
 	local playerPed = GetPlayerPed(-1)
-	local coords    = GetEntityCoords(playerPed)
-	local boneIndex = GetPedBoneIndex(playerPed, 57005)
 	
-	RequestAnimDict('amb@code_human_wander_drinking@beer@male@base')
-	while not HasAnimDictLoaded('amb@code_human_wander_drinking@beer@male@base') do
-		Citizen.Wait(1)
-	end
-	
-	ESX.Game.SpawnObject('p_amb_brolly_01', {
-		x = coords.x,
-		y = coords.y,
-		z = coords.z + 2
-	}, function(object)
-		AttachEntityToEntity(object, playerPed, boneIndex, 0.10, 0, -0.001, 80.0, 150.0, 200.0, true, true, false, true, 1, true)
-		TaskPlayAnim(playerPed, "amb@code_human_wander_drinking@beer@male@base", "static", 3.5, -8, -1, 49, 0, 0, 0, 0)
-		Citizen.Wait(30000)
-		DeleteObject(object)
+	if not IsAnimated then	
+		local prop_name = 'p_amb_brolly_01'
+		IsAnimated = true 	
+		Citizen.CreateThread(function()
+	        local x,y,z = table.unpack(GetEntityCoords(playerPed))
+	        prop = CreateObject(GetHashKey(prop_name), x, y, z+0.2,  true,  true, true)		
+		RequestAnimDict('amb@code_human_wander_drinking@beer@male@base')
+			while not HasAnimDictLoaded('amb@code_human_wander_drinking@beer@male@base') do
+			Citizen.Wait(1)
+			end			
+			AttachEntityToEntity(prop, playerPed, GetPedBoneIndex(playerPed, 57005), 0.10, 0, -0.001, 80.0, 150.0, 200.0, true, true, false, true, 1, true)
+			TaskPlayAnim(playerPed, "amb@code_human_wander_drinking@beer@male@base", "static", 3.5, -8, -1, 49, 0, 0, 0, 0)
+		end)
+		
+	elseif IsAnimated then		
+		IsAnimated = false
 		ClearPedSecondaryTask(playerPed)
-	end)
+		DeleteObject(prop)
+	end
 end)
 
 --End of paraply
@@ -294,32 +295,33 @@ end)
 RegisterNetEvent('esx_extraitems:ros')
 AddEventHandler('esx_extraitems:ros', function()
 	local playerPed = GetPlayerPed(-1)
-	local coords    = GetEntityCoords(playerPed)
-	local boneIndex = GetPedBoneIndex(playerPed, 57005)
 	
-	RequestAnimDict('amb@code_human_wander_drinking@beer@male@base')
-	while not HasAnimDictLoaded('amb@code_human_wander_drinking@beer@male@base') do
-		Citizen.Wait(10)
-	end
-	
-	ESX.Game.SpawnObject('p_single_rose_s', {
-		x = coords.x,
-		y = coords.y,
-		z = coords.z + 2
-	}, function(object)
-		AttachEntityToEntity(object, playerPed, boneIndex, 0.10, 0, -0.001, 80.0, 150.0, 200.0, true, true, false, true, 1, true)
-		TaskPlayAnim(playerPed, "amb@code_human_wander_drinking@beer@male@base", "static", 3.5, -8, -1, 49, 0, 0, 0, 0)
-		Citizen.Wait(30000)
-		DeleteObject(object)
+	if not IsAnimated then	
+		local prop_name = 'p_single_rose_s'
+		IsAnimated = true 	
+		Citizen.CreateThread(function()
+	        local x,y,z = table.unpack(GetEntityCoords(playerPed))
+	        prop = CreateObject(GetHashKey(prop_name), x, y, z+0.2,  true,  true, true)		
+		RequestAnimDict('amb@code_human_wander_drinking@beer@male@base')
+			while not HasAnimDictLoaded('amb@code_human_wander_drinking@beer@male@base') do
+			Citizen.Wait(1)
+			end			
+			AttachEntityToEntity(prop, playerPed, GetPedBoneIndex(playerPed, 57005), 0.10, 0, -0.001, 80.0, 150.0, 200.0, true, true, false, true, 1, true)
+			TaskPlayAnim(playerPed, "amb@code_human_wander_drinking@beer@male@base", "static", 3.5, -8, -1, 49, 0, 0, 0, 0)
+		end)
+		
+	elseif IsAnimated then		
+		IsAnimated = false
 		ClearPedSecondaryTask(playerPed)
-	end)
+		DeleteObject(prop)
+	end
 end)
 
 --End of ros
 --Start of Redbull
 
-RegisterNetEvent('esx_extraitems:redbull')
-AddEventHandler('esx_extraitems:redbull', function()
+RegisterNetEvent('esx_extraitems:monster')
+AddEventHandler('esx_extraitems:monster', function()
 	local playerPed  = GetPlayerPed(-1)
 	local coords     = GetEntityCoords(playerPed)
 	local boneIndex  = GetPedBoneIndex(playerPed, 18905)
@@ -341,7 +343,7 @@ AddEventHandler('esx_extraitems:redbull', function()
 		DeleteObject(object)
 		ClearPedSecondaryTask(playerPed)
 	end)
-	ESX.ShowNotification(_U('redbull_consumed'))
+	ESX.ShowNotification('du känner dig hypad och energifull. Du kan nu springa ~y~5~w~ minuter ~o~utan att bli trött~w~!')
 	
 	local timer = 0
 	while timer < 300 do
@@ -349,5 +351,5 @@ AddEventHandler('esx_extraitems:redbull', function()
 		Citizen.Wait(2000)
 		timer = timer + 2
 	end
-	ESX.ShowNotification(_U('redbull_end'))
+	ESX.ShowNotification('Du känner din att puls återgår till en normal nivå')
 end)

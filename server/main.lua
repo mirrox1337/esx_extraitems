@@ -85,7 +85,6 @@ end)
 ESX.RegisterUsableItem('paraply', function(source)
 	TriggerClientEvent('esx_extraitems:paraply', source)
 	local xPlayer  = ESX.GetPlayerFromId(source)
-	xPlayer.removeInventoryItem('paraply', 1)
 end)
 
 --Picknick
@@ -96,8 +95,16 @@ ESX.RegisterUsableItem('picknick', function(source)
 end)
 
 --Ros
-ESX.RegisterUsableItem('rose', function(source)
-	TriggerClientEvent('esx_extraitems:rose', source)
+ESX.RegisterUsableItem('ros', function(source)
+	TriggerClientEvent('esx_extraitems:ros', source)
 	local xPlayer = ESX.GetPlayerFromId(source)
-	xPlayer.removeInventoryItem('rose', 1)
+end)
+
+--Redbull
+ESX.RegisterUsableItem('monster', function(source)
+	TriggerClientEvent('esx_extraitems:monster', source)
+	local xPlayer = ESX.GetPlayerFromId(source)
+	
+	xPlayer.removeInventoryItem('monster', 1)
+	TriggerClientEvent('esx_status:add', source, 'thirst', 50000)
 end)
